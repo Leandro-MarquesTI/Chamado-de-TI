@@ -48,7 +48,7 @@ O objetivo é reduzir o tempo de resposta e centralizar as informações de supo
 ## 📋 Como Usar
 1. Baixe ou clone este repositório:
    ```bash
-   git clone https://github.com/SEU_USUARIO/SEU_REPOSITORIO.git
+   git clone https://github.com/Leandro-MarquesTI/Chamado-de-TI.git
    ```
 2. Abra o arquivo `index.html` no navegador.
 3. Preencha os campos e clique em **Enviar Chamado**.
@@ -63,6 +63,7 @@ O objetivo é reduzir o tempo de resposta e centralizar as informações de supo
 ---
 
 ## 👨‍💻 Autor
-**Leandro Marques**  
+**Leandro Marques | Assistente de Sistemas**  
+
 📧 [Leandromarquesnovorumo@gmail.com](mailto:Leandromarquesnovorumo@gmail.com)  
 📱 (74) 9 9933-9467  
