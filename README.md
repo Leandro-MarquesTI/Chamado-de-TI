@@ -15,7 +15,7 @@ O objetivo é reduzir o tempo de resposta e centralizar as informações de supo
 ## 🖼️ Demonstração
 
 ### Tela Principal
-![Tela Principal](https://raw.githubusercontent.com/SEU_USUARIO/SEU_REPOSITORIO/main/imagens/tela-principal.png)
+![Tela Principal](https://raw.githubusercontent.com/Leandro-MarquesTI/Chamado-de-TI/main/imagens/tela-principal.png)
 
 ---
 
