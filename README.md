@@ -1,6 +1,6 @@
 # 📌 Sistema de Solicitação de Chamados de TI
 
-![Tela do Sistema](LINK-DA-IMAGEM)
+![Tela do Sistema](https://github.com/Leandro-MarquesTI/Chamado-de-TI/blob/main/Print_Sistema.jpg)
 
 Este projeto foi desenvolvido como parte do meu aprendizado em HTML, CSS e JavaScript,
 durante meu trabalho na **Novo Rumo Agrícola**, onde atuo como **Assistente de Sistemas JR**.
