@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard de Chamados TI</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f9f9f9; }
+    h1 { text-align: center; margin-bottom: 30px; }
+
+    /* Cards de status */
+    .cards { display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; }
+    .card {
+      flex: 1; min-width: 150px; padding: 20px; border-radius: 12px; 
+      text-align: center; color: #fff; font-weight: bold; box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    .aberto { background: #28a745; }        
+    .alocado { background: #ffc107; color:#333; } 
+    .encaminhado { background: #007bff; }   
+    .andamento { background: #fd7e14; }     
+    .fechado { background: #dc3545; }       
+
+    /* Gráfico */
+    canvas { display: block; margin: 40px auto; max-width: 500px; }
+
+    /* Lista de chamados */
+    .mensagens { margin-top: 30px; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+    .mensagens h2 { margin-bottom: 15px; }
+    .msg { padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; }
+    .msg:last-child { border-bottom: none; }
+    .msg.Aberto { color: #28a745; }
+    .msg.Alocado { color: #ffc107; }
+    .msg.Encaminhado { color: #007bff; }
+    .msg["Em andamento"] { color: #fd7e14; }
+    .msg.Fechado { color: #dc3545; }
+
+    /* Feed de notificações estilo ZAP */
+    .notificacoes { margin-top: 30px; padding: 20px; background: #fff; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+    .notificacoes h2 { margin-bottom: 15px; }
+    .notificacao { 
+      padding: 10px; margin-bottom: 5px; 
+      border-left: 5px solid #007bff; 
+      background: #f1f9ff; 
+    }
+    .notificacao.aberto { border-left-color: #28a745; }
+    .notificacao.alocado { border-left-color: #ffc107; color:#333; }
+    .notificacao.encaminhado { border-left-color: #007bff; }
+    .notificacao.andamento { border-left-color: #fd7e14; }
+    .notificacao.fechado { border-left-color: #dc3545; }
+  </style>
+</head>
+<body>
+  <h1>📊 Dashboard de Chamados de TI</h1>
+
+  <!-- Cards de status -->
+  <div class="cards">
+    <div class="card aberto">Aberto: <span id="aberto">0</span></div>
+    <div class="card alocado">Alocado: <span id="alocado">0</span></div>
+    <div class="card encaminhado">Encaminhado: <span id="encaminhado">0</span></div>
+    <div class="card andamento">Em andamento: <span id="andamento">0</span></div>
+    <div class="card fechado">Fechado: <span id="fechado">0</span></div>
+  </div>
+
+  <!-- Gráfico de status -->
+  <canvas id="statusChart" width="400" height="200"></canvas>
+
+  <!-- Lista de chamados -->
+  <div class="mensagens">
+    <h2>📩 Lista de Chamados</h2>
+    <div id="listaChamados"></div>
+  </div>
+
+  <!-- Feed de notificações -->
+  <div class="notificacoes">
+    <h2>🔔 Notificações</h2>
+    <div id="notificacoesLista"></div>
+  </div>
+
+  <script>
+    let chamadosAtuais = [];
+
+    // Atualiza cards, gráfico e lista
+    function atualizarDashboard(dados) {
+      const contagem = { Aberto:0, Alocado:0, Encaminhado:0, "Em andamento":0, Fechado:0 };
+      dados.forEach(c => { if(contagem[c.status]!==undefined) contagem[c.status]++; });
+
+      document.getElementById("aberto").textContent = contagem.Aberto;
+      document.getElementById("alocado").textContent = contagem.Alocado;
+      document.getElementById("encaminhado").textContent = contagem.Encaminhado;
+      document.getElementById("andamento").textContent = contagem["Em andamento"];
+      document.getElementById("fechado").textContent = contagem.Fechado;
+
+      const ctx = document.getElementById('statusChart').getContext('2d');
+      if(window.chartStatus) window.chartStatus.destroy();
+      window.chartStatus = new Chart(ctx, {
+        type:'doughnut',
+        data:{
+          labels:['Aberto','Alocado','Encaminhado','Em andamento','Fechado'],
+          datasets:[{
+            data:Object.values(contagem),
+            backgroundColor:['#28a745','#ffc107','#007bff','#fd7e14','#dc3545']
+          }]
+        }
+      });
+
+      const lista = document.getElementById("listaChamados");
+      lista.innerHTML="";
+      dados.forEach(c=>{
+        const div=document.createElement("div");
+        div.classList.add("msg",c.status);
+        div.textContent=`${c.status} - ${c.email}`;
+        lista.appendChild(div);
+      });
+    }
+
+    // Mostra notificação no feed
+    function mostrarNotificacao(msg, tipo){
+      const lista=document.getElementById("notificacoesLista");
+      const div=document.createElement("div");
+      div.classList.add("notificacao",tipo.toLowerCase());
+      div.textContent=msg;
+      lista.prepend(div);
+    }
+
+    // Busca dados da API e detecta mudanças
+    async function buscarChamados(){
+      try{
+        const response=await fetch("http://SEU_SERVIDOR_API/chamados"); // <--- troque pelo seu endpoint
+        const dados=await response.json();
+
+        dados.forEach(c=>{
+          const antigo=chamadosAtuais.find(a=>a.id===c.id);
+          if(antigo && antigo.status!==c.status){
+            mostrarNotificacao(`➡️ Chamado #${c.id} mudou de ${antigo.status} para ${c.status}`, c.status);
+          } else if(!antigo){
+            mostrarNotificacao(`📩 Novo chamado #${c.id} aberto por ${c.email}`, c.status);
+          }
+        });
+
+        chamadosAtuais=dados;
+        atualizarDashboard(dados);
+
+      } catch(error){
+        console.error("Erro ao carregar dados da API:",error);
+      }
+    }
+
+    // Atualiza a cada 10 segundos
+    buscarChamados();
+    setInterval(buscarChamados,10000);
+  </script>
+</body>
+</html>
