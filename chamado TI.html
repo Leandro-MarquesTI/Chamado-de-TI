@@ -1,135 +1,102 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Chamado de Suporte - TI</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f0f0f0;
-      padding: 20px;
-      color: #333;
-    }
-    h2 {
-      text-align: center;
-      color: #005a9c;
-    }
-    form {
-      background: #fff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ccc;
-      max-width: 700px;
-      margin: 20px auto;
-    }
-    label {
-      font-weight: bold;
-      display: block;
-      margin-top: 15px;
-    }
-    input, select, textarea, button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-      box-sizing: border-box;
-    }
-    button {
-      background-color: #005a9c;
-      color: white;
-      font-weight: bold;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-    .footer {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 0.9em;
-      color: #888;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chamado de Suporte - TI</title>
+<style>
+body { font-family: Arial, sans-serif; background: #f0f0f0; padding: 20px; color: #333; }
+h2 { text-align: center; color: #005a9c; }
+form { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; max-width: 700px; margin: 20px auto; }
+label { font-weight: bold; display: block; margin-top: 15px; }
+input, select, textarea, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; box-sizing: border-box; }
+button { background-color: #005a9c; color: white; font-weight: bold; margin-top: 20px; cursor: pointer; }
+/* Badge de status */
+.chamado-status { margin: 15px 0; text-align:center; }
+.status { padding: 5px 15px; border-radius: 8px; font-weight: bold; color: #fff; font-size:1.1em; }
+.enviado { background: #007bff; }
+/* Footer */
+.footer { text-align: center; margin-top: 20px; font-size: 0.9em; color: #888; }
+</style>
 </head>
 <body>
-  <h2>Solicitação De Suporte</h2>
-  <form id="chamadoForm">
-    <label>Seu nome:</label>
-    <input type="text" id="nome" placeholder="Digite seu nome" required />
-    <label>Setor:</label>
-    <select id="setor" required>
-      <option value="Escritorio PH">🖥️ Escritorio PH</option>
-      <option value="PH - Packing House">🖥️ PH - Packing House</option>
-      <option value="CF - Camara Fria">🖥️ CF - Camara Fria</option>
-      <option value="CM - Comercial">🖥️ CM - Comercial</option>
-      <option value ="RP- Recepção da fruta">RP - Comercial da fruta</option>
-    </select>
-    <label>Descrição da Solicitação:</label>
-    <textarea id="descricao" rows="4" placeholder="Descreva o problema ou o que está sendo solicitado" required></textarea>
-    <label>Escolha o Suporte:</label>
-    <select id="suporte" required>
-      <option value="suporte1">🖥️ Eugenio Cafe - Analista de TI</option>
-      <option value="suporte2">🖥️ Dhiogo Andrade - Analista de Sistemas</option>
-      <option value="suporte3">🖥️ Leandro Marques - Auxiliar de TI PH</option>
-      <option value="suporte4">🖥️ Thiago Santos - Auxiliar de TI PH</option>
-    </select>
-    <button type="submit">Enviar Chamado</button>
-  </form>
-  <div class="footer">© 2025 - Suporte Técnico TI | Novo Rumo Agrícola</div>
-  <!-- Marca d'água (fundo branco) -->
-  <footer style="background-color: rgba(255, 255, 255, 0.85); color: #000; text-align: center; padding: 10px; font-size: 14px; font-family: Arial, sans-serif; position: fixed; bottom: 0; left: 0; width: 100%; box-shadow: 0 -2px 5px rgba(0,0,0,0.1); z-index: 999;">
-    <p style="margin: 0;">
-      Leandro Marques | Assistente De Sistemas JR<br>
-      Suporte: <a href="mailto:Leandromarquesnovorumo@gmail.com" style="color: #000; text-decoration: none;">Leandromarquesnovorumo@gmail.com</a><br>
-      Tel: <a href="tel:+5574999339467" style="color: #000; text-decoration: none;">(74) 9 9933-9467</a>
-    </p>
-  </footer>
-  <script>
-  const contatos = {
-      suporte1: {
-        nome: "Eugenio Cafe",
-        email: "eugenio.cafe@empresa.com",
-        whatsapp: "557499900001"  // formato internacional sem + e sem zeros à esquerda
-      },
-      suporte2: {
-        nome: "Dhiogo Andrade",
-        email: "dhiogo.andrade@empresa.com",
-        whatsapp: "557499900002"
-      },
-      suporte3: {
-        nome: "Leandro Marques",
-        email: "leandromarquesnovorumo@gmail.com",
-        whatsapp: "5574999339367"
-      },
-      suporte4: {
-        nome: "Thiago Santos",
-        email: "thiago.santos@empresa.com",
-        whatsapp: "557499900004"
-      }
-    };
-  document.getElementById("chamadoForm").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const nome = document.getElementById("nome").value.trim();
-    const setor = document.getElementById("setor").value.trim();
-    const descricao = document.getElementById("descricao").value.trim();
-    const suporteSelecionado = document.getElementById("suporte").value;
-    const suporte = contatos[suporteSelecionado];
-    if (!suporte) {
-      alert("Suporte selecionado não encontrado!");
-      return;
-    }
-    // Link de e-mail
-    const assunto = `Chamado de TI - ${setor}`;
-    const corpoEmail = `Olá ${suporte.nome},\n\nSolicitação de suporte:\n\nNome: ${nome}\nSetor: ${setor}\n\nDescrição:\n${descricao}\n\nPor favor, confirmar o recebimento.`;
-    const mailto = `mailto:${suporte.email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
-    // Link de WhatsApp
-    const mensagemWhats = `Olá ${suporte.nome}, acabei de enviar um chamado por e-mail:\n\n📋 ${descricao}\n\n✉️ Por favor, verificar o e-mail e retornar.`;
-    const whatsappURL = `https://wa.me/${suporte.whatsapp}?text=${encodeURIComponent(mensagemWhats)}`;
-    // Abre os dois em novas abas
-    window.open(mailto, "_blank");
-    window.open(whatsappURL, "_blank");
-  });
-</script>
+<h2>Solicitação De Suporte</h2>
+<form id="chamadoForm">
+<label>Seu nome:</label>
+<input type="text" id="nome" placeholder="Digite seu nome" required />
+  <label>Setor:</label>
+<select id="setor" required>
+<option value="Escritorio PH">🖥️ Escritorio PH</option>
+<option value="PH - Packing House">🖥️ PH - Packing House</option>
+<option value="CF - Camara Fria">🖥️ CF - Camara Fria</option>
+<option value="CM - Comercial">🖥️ CM - Comercial</option>
+<option value ="RP- Recepção da fruta">RP - Recpeção da fruta</option>
+</select>
+<label>Descrição da Solicitação:</label>
+<textarea id="descricao" rows="4" placeholder="Descreva o problema ou o que está sendo solicitado" required></textarea>
+<label>Escolha o Suporte:</label>
+<select id="suporte" required>
+<option value="suporte1">🖥️ Eugenio Cafe - Analista de TI</option>
+<option value="suporte2">🖥️ Dhiogo Andrade - Analista de Sistemas</option>
+<option value="suporte3">🖥️ Leandro Marques - Auxiliar de TI PH</option>
+<option value="suporte4">🖥️ Thiago Santos - Auxiliar de TI PH</option>
+</select>
+<button type="submit">Enviar Chamado</button>
+<!-- Badge de status -->
+<div class="chamado-status">
+<h3>Status do Chamado</h3>
+<span id="statusChamado" class="status enviado">Enviado</span>
+</div>
+</form>
+<div class="footer">© 2025 - Suporte Técnico TI | Novo Rumo Agrícola
+      Leandro Marques | Assistente de sistema
+      Suporte:Leandromarquesnovorumo@gmail.com
+      Contato:(74) 9 9933-9467
+</div>
+<script>
+// ---------------- CONFIGURAÇÃO DE API ----------------
+const apiURL = ""; // Coloque a URL da API quando estiver disponível
+// -----------------------------------------------------
+const contatos = {
+  suporte1:{nome:"Eugenio Cafe",email:"eugenio.cafe@empresa.com",whatsapp:"557499900001"},
+  suporte2:{nome:"Dhiogo Andrade",email:"dhiogo.andrade@empresa.com",whatsapp:"557499900002"},
+  suporte3:{nome:"Leandro Marques",email:"leandromarquesnovorumo@gmail.com",whatsapp:"5574999339367"},
+  suporte4:{nome:"Thiago Santos",email:"thiago.santos@empresa.com",whatsapp:"557499900004"}
+};
+document.getElementById("chamadoForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  const nome = document.getElementById("nome").value.trim();
+  const setor = document.getElementById("setor").value.trim();
+  const descricao = document.getElementById("descricao").value.trim();
+  const suporteSelecionado = document.getElementById("suporte").value;
+  const suporte = contatos[suporteSelecionado];
+  if(!nome || !setor || !descricao || !suporte){alert("Preencha todos os campos!"); return;}
+// Atualiza badge de status
+  const statusSpan = document.getElementById("statusChamado");
+  statusSpan.className = "status enviado";
+  statusSpan.textContent = "Enviado";
+ // Limpar formulário
+  document.getElementById("chamadoForm").reset();
+// Envio para API quando configurada
+  if(apiURL && apiURL !== ""){
+    fetch(apiURL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({nome,setor,descricao,suporte:suporteSelecionado,status:"Enviado",timestamp:new Date().toISOString()})
+    })
+    .then(res=>res.json())
+    .then(data=>console.log("Chamado enviado para API:",data))
+    .catch(err=>console.error("Erro ao enviar para API:",err));
+  }
+// Abrir e-mail e WhatsApp
+  const assunto = `Chamado de TI - ${setor}`;
+  const corpoEmail = `Olá ${suporte.nome},\n\nSolicitação de suporte:\n\nNome: ${nome}\nSetor: ${setor}\n\nDescrição:\n${descricao}\n\nPor favor, confirmar o recebimento.`;
+  const mailto = `mailto:${suporte.email}?subject=${encodeURIComponent(assunto)}&body=${encodeURIComponent(corpoEmail)}`;
+  const mensagemWhats = `Olá ${suporte.nome}, acabei de enviar um chamado por e-mail:\n\n📋 ${descricao}\n\n✉️ Por favor, verificar o e-mail e retornar.`;
+  const whatsappURL = `https://wa.me/${suporte.whatsapp}?text=${encodeURIComponent(mensagemWhats)}`;
+  window.open(mailto,"_blank");
+  window.open(whatsappURL,"_blank");
+});
 </script>
 </body>
 </html>
